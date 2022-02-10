@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:push_notifications/green_page.dart';
 import 'package:push_notifications/red_page.dart';
+import 'package:push_notifications/services/local_notification_service.dart';
 
 /// App in background
 Future<void> backgroundHandler(RemoteMessage message) async {
@@ -51,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    LocalNotificationService.initialize(context);
 
     /// wake app on tap notification from close state
     FirebaseMessaging.instance.getInitialMessage().then((message){
@@ -60,8 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     /// Foreground
     FirebaseMessaging.onMessage.listen((message) {
-      print(message.notification!.title);
-      print(message.notification!.body);
+      LocalNotificationService.display(message);
     });
 
     /// When the app is in background but opened
