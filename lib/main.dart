@@ -5,8 +5,16 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:push_notifications/green_page.dart';
 import 'package:push_notifications/red_page.dart';
 
-void main() {
+/// App in background
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(const MyApp());
 }
 
@@ -40,6 +48,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    /// wake app on tap notification from close state
+    FirebaseMessaging.instance.getInitialMessage().then((message){
+      final routeFromMessage = message!.data["route"];
+      Navigator.of(context).pushNamed(routeFromMessage);
+    });
+
+    /// Foreground
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message.notification!.title);
+      print(message.notification!.body);
+    });
+
+    /// When the app is in background but opened
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final routeFromMessage = message.data["route"];
+      Navigator.of(context).pushNamed(routeFromMessage);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
