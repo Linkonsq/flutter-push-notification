@@ -1,17 +1,29 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:push_notifications/utilities.dart';
 
 Future<void> createPlantFoodNotification() async {
   await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: createUniqueId(),
-        channelKey: 'basic_channel',
-        title:
-        '${Emojis.money_money_bag + Emojis.plant_cactus} Buy Plant Food!!!',
-        body: 'Florist at 123 Main St. has 2 in stock',
-        bigPicture: 'asset://assets/notification_map.png',
-        notificationLayout: NotificationLayout.BigPicture,
+    content: NotificationContent(
+      id: createUniqueId(),
+      channelKey: 'basic_channel',
+      title:
+          '${Emojis.money_money_bag + Emojis.plant_cactus} Buy Plant Food!!!',
+      body: 'Florist at 123 Main St. has 2 in stock',
+      bigPicture: 'asset://assets/notification_map.png',
+      notificationLayout: NotificationLayout.BigPicture,
+    ),
+    actionButtons: [
+      NotificationActionButton(
+        key: 'listen',
+        label: 'Listen',
       ),
+      NotificationActionButton(
+        key: 'decline',
+        label: 'Decline',
+      ),
+    ],
   );
 }
 

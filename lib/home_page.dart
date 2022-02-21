@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     AwesomeNotifications().actionStream.listen((notification) {
+      //debugPrint('Notification key pressed: ${notification.buttonKeyPressed}');
       if (notification.channelKey == 'basic_channel' && Platform.isIOS) {
         AwesomeNotifications().getGlobalBadgeCounter().then(
               (value) =>
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (_) => PlantStatsPage(),
+          builder: (_) => const PlantStatsPage(),
         ),
             (route) => route.isFirst,
       );
