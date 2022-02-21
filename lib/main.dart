@@ -13,6 +13,7 @@ void main() {
         defaultColor: Colors.teal,
         importance: NotificationImportance.High,
         channelShowBadge: true,
+        locked: true,
       ),
       NotificationChannel(
         channelKey: 'scheduled_channel',

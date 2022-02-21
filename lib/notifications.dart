@@ -1,6 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:push_notifications/utilities.dart';
 
 Future<void> createPlantFoodNotification() async {
@@ -18,10 +17,12 @@ Future<void> createPlantFoodNotification() async {
       NotificationActionButton(
         key: 'listen',
         label: 'Listen',
+        color: Colors.green,
       ),
       NotificationActionButton(
         key: 'decline',
         label: 'Decline',
+        color: Colors.red,
       ),
     ],
   );

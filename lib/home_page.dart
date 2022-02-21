@@ -73,13 +73,15 @@ class _HomePageState extends State<HomePage> {
         );
       }
 
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const PlantStatsPage(),
-        ),
-            (route) => route.isFirst,
-      );
+      if (notification.buttonKeyPressed == 'listen') {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const PlantStatsPage(),
+          ),
+              (route) => route.isFirst,
+        );
+      }
     });
   }
 
