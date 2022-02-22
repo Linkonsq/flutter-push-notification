@@ -40,8 +40,14 @@ Future<void> createWaterReminderNotification(
     ),
     actionButtons: [
       NotificationActionButton(
-        key: 'MARK_DONE',
-        label: 'Mark Done',
+        key: 'listen',
+        label: 'Listen',
+        color: Colors.green,
+      ),
+      NotificationActionButton(
+        key: 'decline',
+        label: 'Decline',
+        color: Colors.red,
       ),
     ],
     schedule: NotificationCalendar(

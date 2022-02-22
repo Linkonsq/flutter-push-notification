@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
+        //AwesomeNotifications().requestPermissionToSendNotifications();
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -38,17 +39,17 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               TextButton(
-                  onPressed: () => AwesomeNotifications()
-                      .requestPermissionToSendNotifications()
-                      .then((_) => Navigator.pop(context)),
-                  child: const Text(
-                    'Allow',
-                    style: TextStyle(
-                      color: Colors.teal,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                onPressed: () => AwesomeNotifications()
+                    .requestPermissionToSendNotifications()
+                    .then((_) => Navigator.pop(context)),
+                child: const Text(
+                  'Allow',
+                  style: TextStyle(
+                    color: Colors.teal,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
               )
             ],
           ),
@@ -69,8 +70,8 @@ class _HomePageState extends State<HomePage> {
       if (notification.channelKey == 'basic_channel' && Platform.isIOS) {
         AwesomeNotifications().getGlobalBadgeCounter().then(
               (value) =>
-              AwesomeNotifications().setGlobalBadgeCounter(value - 1),
-        );
+                  AwesomeNotifications().setGlobalBadgeCounter(value - 1),
+            );
       }
 
       if (notification.buttonKeyPressed == 'listen') {
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(
             builder: (_) => const PlantStatsPage(),
           ),
-              (route) => route.isFirst,
+          (route) => route.isFirst,
         );
       }
     });
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage> {
               onPressedOne: createPlantFoodNotification,
               onPressedTwo: () async {
                 NotificationWeekAndTime? pickedSchedule =
-                await pickSchedule(context);
+                    await pickSchedule(context);
 
                 if (pickedSchedule != null) {
                   createWaterReminderNotification(pickedSchedule);
