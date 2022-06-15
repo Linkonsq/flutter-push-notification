@@ -1,7 +1,9 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:push_notifications/green_page.dart';
 import 'package:push_notifications/red_page.dart';
 import 'package:push_notifications/services/local_notification_service.dart';
@@ -55,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     LocalNotificationService.initialize(context);
 
     /// wake app on tap notification from close state
-    FirebaseMessaging.instance.getInitialMessage().then((message){
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
       final routeFromMessage = message!.data["route"];
       Navigator.of(context).pushNamed(routeFromMessage);
     });
@@ -72,8 +74,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void requestPermission(BuildContext context) async {
+    if (await Permission.notification.request().isGranted) {
+      //print("Got access to notification");
+    } else if (await Permission.notification.status.isDenied) {
+      await Permission.notification.request();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text("Please turn on notification"),
+        action: SnackBarAction(
+          label: "Open Setting",
+          onPressed: () => AppSettings.openNotificationSettings(),
+        ),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    requestPermission(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
